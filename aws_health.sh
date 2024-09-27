@@ -39,11 +39,9 @@ get_aws_version(){
     version=$($(which aws) --version | awk -F '/' '{print $2}' | awk '{print $1}')
     echo "AWS CLI version : $version"
 
-    configured=$(aws configure list | tail -3 | head -1 | awk '{print $4}')
-    if [[ ! "$configured" == "None" ]]; then
-        echo -e "AWS CLI is configured\n"
-    else 
-        echo "AWS CLI is not configured : https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html"
+    # Check if AWS CLI is configured or not
+    if ! aws sts get-caller-identity &>/dev/null; then
+        echo "AWS CLI is not configured. Please configure AWS CLI (https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) and try again."
         exit 1
     fi
 }
