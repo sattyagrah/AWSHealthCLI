@@ -38,6 +38,14 @@ get_aws_version(){
     local version
     version=$($(which aws) --version | awk -F '/' '{print $2}' | awk '{print $1}')
     echo "AWS CLI version : $version"
+
+    configured=$(aws configure list | tail -3 | head -1 | awk '{print $4}')
+    if [[ ! "$configured" == "None" ]]; then
+        echo "AWS CLI is configured"
+    else 
+        echo "AWS CLI is not configured : https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html"
+        exit 1
+    fi
 }
 
 # Function to list all services
