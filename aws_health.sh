@@ -41,7 +41,7 @@ get_aws_version(){
 
     configured=$(aws configure list | tail -3 | head -1 | awk '{print $4}')
     if [[ ! "$configured" == "None" ]]; then
-        echo "AWS CLI is configured"
+        echo "AWS CLI is configured\n"
     else 
         echo "AWS CLI is not configured : https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html"
         exit 1
@@ -122,6 +122,7 @@ select_category(){
 # Function to show menu
 show_menu(){
     cat <<EOF
+==== Menu ====    
 1. List all services. 
 2. List all event codes.
 3. List all event codes of a particular service. 
