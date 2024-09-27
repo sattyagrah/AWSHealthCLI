@@ -1,8 +1,7 @@
 ### Use case : 
 
-> ```
-> Use this script if you want to list out the AWS health event codes, event codes for specific cateogry or service. 
-> ```
+- Use this script if you want to list out the AWS health event codes, event codes for specific cateogry or service. 
+
 
 ## How to use
 
