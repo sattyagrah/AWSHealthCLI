@@ -41,7 +41,7 @@ get_aws_version(){
 
     configured=$(aws configure list | tail -3 | head -1 | awk '{print $4}')
     if [[ ! "$configured" == "None" ]]; then
-        echo "AWS CLI is configured\n"
+        echo -e "AWS CLI is configured\n"
     else 
         echo "AWS CLI is not configured : https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html"
         exit 1
