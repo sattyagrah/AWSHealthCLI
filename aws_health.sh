@@ -66,7 +66,7 @@ list_all_event_type_codes(){
 list_all_event_type_codes_for_service(){
     select_service
     event_type_code_for_service=$(aws health describe-event-types --region us-east-1 --filter services=$service --query 'sort_by(eventTypes, &code)[].code' --output yaml)
-    echo "\nThe list of event type codes for $service service is as follows : \n$event_type_code_for_service\n"
+    echo -e "\nThe list of event type codes for $service service is as follows : \n$event_type_code_for_service\n"
 }
 
 # Function to list event codes for a particular event type categories of a particular service
@@ -74,7 +74,7 @@ list_all_event_type_code_for_categories_in_service(){
     select_service
     select_category
     event_type_code_for_category_in_service=$(aws health describe-event-types --region us-east-1 --filter services=$service,eventTypeCategories=$category --query 'sort_by(eventTypes, &code)[].code' --output yaml)
-    echo "\nThe list of event type codes for category [$category] in $service service is as follows : \n$event_type_code_for_category_in_service\n"
+    echo -e "\nThe list of event type codes for category [$category] in $service service is as follows : \n$event_type_code_for_category_in_service\n"
 }
 
 # Function to select service 
@@ -136,7 +136,7 @@ check_cli_installed
 rm -f $(pwd)/aws_health_*.log
 
 # Print execution time    
-echo "Script executing at $script_date ($(date -ur $script_date))\n"
+echo -e "Script executing at $script_date ($(date -ur $script_date))\n"
 
 # Get AWS version    
 get_aws_version
@@ -152,13 +152,13 @@ option=${option:-4}
 case $option in
     "1")
         list_all_services
-        echo "Service list is present here : $(pwd)/aws_health_service.log\n"
+        echo -e "Service list is present here : $(pwd)/aws_health_service.log\n"
         exit 0
         ;;
 
     "2")
         list_all_event_type_codes
-        echo "Event codes is present here : $(pwd)/aws_health_event_code.log\n"
+        echo -e "Event codes is present here : $(pwd)/aws_health_event_code.log\n"
         exit 0
         ;;
 
