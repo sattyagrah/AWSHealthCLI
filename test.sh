@@ -1,17 +1,22 @@
 #!/bin/bash
 
-# Function to set the PATH if AWS CLI is installed but not found
+# Function to set the PATH if AWS CLI is installed but not found and create a soft link if necessary
 set_aws_path() {
     if command -v aws &>/dev/null; then
         echo "AWS CLI found in the system path."
     else
         # Try to set the path manually if installed
-        if [ -d "/usr/local/bin" ] && [ -f "/usr/local/bin/aws" ]; then
+        if [ -f "/usr/local/bin/aws" ]; then
             export PATH=$PATH:/usr/local/bin
             echo "AWS CLI path set to /usr/local/bin."
-        elif [ -d "/usr/bin" ] && [ -f "/usr/bin/aws" ]; then
+        elif [ -f "/usr/bin/aws" ]; then
             export PATH=$PATH:/usr/bin
             echo "AWS CLI path set to /usr/bin."
+        elif [ -f "/usr/local/aws-cli/v2/current/bin/aws" ]; then
+            # Create a soft link if AWS CLI is installed but not linked correctly
+            ln -s /usr/local/aws-cli/v2/current/bin/aws /usr/local/bin/aws
+            export PATH=$PATH:/usr/local/bin
+            echo "Soft link created for AWS CLI and path set."
         else
             echo "AWS CLI path could not be set automatically. Please ensure it's installed correctly."
             exit 1
