@@ -111,19 +111,6 @@ get_latest_ami() {
     echo "$ami_id"
 }
 
-# # setting AWS path
-# set_aws_path(){
-#     if command -v aws &>/dev/null; then
-#         echo "AWS CLI found in the system path."
-#     else
-#         if [ -f "/usr/local/bin/aws" ]; then
-#             ln -sf /usr/local/aws-cli/v2/current/bin/aws /bin/aws
-#             echo "Soft link created for AWS CLI and path set."
-#         fi
-#     fi
-# }
-
-
 # Function to generate user data script
 generate_user_data() {
     cat <<'EOF'
