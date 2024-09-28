@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Function to set the PATH if AWS CLI is installed but not found and create a soft link if necessary
-# Function to set AWS path
 set_aws_path(){
     if command -v aws &>/dev/null; then
         echo "AWS CLI found in the system path."
@@ -13,7 +12,7 @@ set_aws_path(){
     fi
 }
 
-# Function to check if a package is installed; if not, install it
+# Function to check if given package is installed; if not, install it
 install_package() {
     local package="$1"
     echo "Checking if $package is installed..."
