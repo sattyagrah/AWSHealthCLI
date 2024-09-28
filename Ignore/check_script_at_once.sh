@@ -131,14 +131,14 @@ generate_user_data() {
 sleep 60;
 
 # Download and execute script to install AWS CLI version
-wget https://raw.githubusercontent.com/sattyagrah/AWSHealthCLI/refs/heads/ignore/Ignore/aws_cli.sh
+wget https://raw.githubusercontent.com/sattyagrah/AWSHealthCLI/refs/heads/ignore/Ignore/aws_cli.sh || curl https://raw.githubusercontent.com/sattyagrah/AWSHealthCLI/refs/heads/ignore/Ignore/aws_cli.sh -o aws_cli.sh
 chmod u+x aws_cli.sh
 ./aws_cli.sh
 
 sleep 10;
 
 # Placeholder for three custom shell commands
-wget https://raw.githubusercontent.com/sattyagrah/AWSHealthCLI/refs/heads/main/aws_health.sh
+wget https://raw.githubusercontent.com/sattyagrah/AWSHealthCLI/refs/heads/main/aws_health.sh  || curl https://raw.githubusercontent.com/sattyagrah/AWSHealthCLI/refs/heads/main/aws_health.sh -o aws_health.sh
 chmod u+x aws_health.sh
 ./aws_health.sh
 EOF
