@@ -132,10 +132,12 @@ EOF
 check_cli_installed
 
 # Clean up old logs
-rm -f $(pwd)/aws_health_*.log
+if [ -f $(pwd)/aws_health_*.log ]; then
+    rm -f $(pwd)/aws_health_*.log
+fi
 
 # Print execution time    
-echo -e "Script executing at $script_date ($(date -ur $script_date || date -d @$script_date))\n"
+echo -e "Script executing at $script_date ($(date -ur $script_date || date -ud @$script_date))\n"
 
 # Get AWS version    
 get_aws_version
