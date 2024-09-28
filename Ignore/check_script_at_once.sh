@@ -130,80 +130,16 @@ generate_user_data() {
 #!/bin/bash -x
 sleep 60;
 
-# Function to set AWS path
-set_aws_path(){
-    if command -v aws &>/dev/null; then
-        echo "AWS CLI found in the system path."
-    else
-        if [ -f "/usr/local/bin/aws" ]; then
-            ln -sf /usr/local/aws-cli/v2/current/bin/aws /bin/aws
-            echo "Soft link created for AWS CLI and path set."
-        fi
-    fi
-}
-
-# Function to install a package if its not already installed
-install_package() {
-    local package="$1"
-    echo "Checking if $package is installed..."
-    if ! command -v "$package" &>/dev/null; then
-        echo "$package not found. Installing..."
-        if [ -f /etc/os-release ]; then
-            . /etc/os-release
-            case "$ID" in
-                amzn|rhel|centos)
-                    yum install -y "$package" || dnf install -y "$package"
-                    ;;
-                ubuntu|debian)
-                    apt-get install -y "$package" || snap install "$package"
-                    ;;
-                sles)
-                    zypper install -y "$package"
-                    wait
-                    ;;
-                *)
-                    echo "Unsupported linux distribution : $ID. Please install $package manually."
-                    exit 1;
-                    ;;
-            esac
-        else
-            echo "OS information not available. Please install $package manually."
-            exit 1
-        fi
-    else
-        echo "$package is already installed."
-    fi
-}
-
-# Install wget and unzip
-install_package "wget"
-install_package "unzip"
-
-# Check AWS CLI version
-if ! aws --version 2>/dev/null | grep -q "aws-cli/2"; then
-    echo "AWS CLI version 2 is not installed. Installing AWS CLI v2..."
-    if [ -f /etc/os-release ]; then
-        . /etc/os-release
-        case "$ID" in
-            amzn|rhel|centos|sles|ubuntu|debian)
-                curl "https://awscli.amazonaws.com/awscli-exe-linux-$(uname -m).zip" -o "awscliv2.zip" && unzip awscliv2.zip && ./aws/install
-                set_aws_path
-                ;;
-            *)
-                echo "Unsupported OS for AWS CLI installation."
-                ;;
-        esac
-    fi
-fi
+# Download and execute script to install AWS CLI version
+wget https://raw.githubusercontent.com/sattyagrah/AWSHealthCLI/refs/heads/ignore/Ignore/aws_cli.sh
+chmod u+x aws_cli.sh
+./aws_cli.sh
 
 sleep 10;
 
 # Placeholder for three custom shell commands
-echo "downloading script..."
 wget https://raw.githubusercontent.com/sattyagrah/AWSHealthCLI/refs/heads/main/aws_health.sh
-echo "changing permission..."
 chmod u+x aws_health.sh
-echo "executing..."
 ./aws_health.sh
 EOF
 }
